@@ -2,12 +2,17 @@ import os
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import nltk
+import json
 
 from utils.speechRecognition import SpeechToTextManager
 from utils.sentimentAnalysis import SentimentAnalysisManager
+from utils.sentimentAnalysisGPT import SentimentAnalysisGPTManager
 
 app = Flask(__name__)
 CORS(app)
+
+nltk.download('punkt_tab')
 
 UPLOAD_FOLDER = 'temp_audio'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -15,6 +20,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 speech_to_text_manager = SpeechToTextManager()
 sentiment_analysis_manager = SentimentAnalysisManager()
+sentiment_analysis_manager_gpt = SentimentAnalysisGPTManager()
 
 @app.route('/')
 def hello_world():
@@ -28,6 +34,8 @@ def upload_file():
 
     file = request.files['file']
     model = request.form.get('model', 'small')
+    language = request.form.get('language', 'portuguese')
+    sentiment_model = request.form.get('sentiment_model', 'llm') 
     
     if file:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
@@ -35,16 +43,23 @@ def upload_file():
         try:
             text = speech_to_text_manager.recognize_speech_split_in_chunks(file_path, 5, model)
 
-            sentiment_results = sentiment_analysis_manager.analyze_transcript_by_phrases(text)
+            if sentiment_model == 'transformers':
+                sentiment_analysis_result = sentiment_analysis_manager.analyze_transcript_by_phrases(text, language)
+            elif sentiment_model == 'llm':
+                sentiment_analysis_result = sentiment_analysis_manager_gpt.analyze_transcript_gpt(text)
+                sentiment_analysis_result = json.loads(sentiment_analysis_result)
 
+            overall_sentiment = sentiment_analysis_result["overall_sentiment"]
+            sentiment_analysis = sentiment_analysis_result["sentiment_analysis"]
 
             os.remove(file_path)
             with open(f"{file_path.rsplit('.', 1)[0]}.txt", 'w') as f:
                 f.write(text)
             return jsonify({
-                            'text': text,
-                            'sentiment_analysis': sentiment_results,
-                            }), 200
+                        'text': text,
+                        'overall_sentiment': overall_sentiment,
+                        'sentiment_analysis': sentiment_analysis,
+                        }), 200
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
