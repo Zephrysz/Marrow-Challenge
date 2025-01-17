@@ -1,14 +1,10 @@
-import React from "react";
+import { ProcessingResult } from "../interfaces";
 
-export const handleAudioFileUpload = async (event: React.ChangeEvent<HTMLInputElement>)=> {
-    const file = event.target.files?.[0];
-    if (!file) {
-      alert("No file selected!");
-      return;
-    }
+export const handleAudioFileUpload = async (file: File, model: string): Promise<ProcessingResult | null> => {
 
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("model", model);
 
     try {
         const response = await fetch("http://localhost:5000/upload", {
@@ -17,12 +13,15 @@ export const handleAudioFileUpload = async (event: React.ChangeEvent<HTMLInputEl
         });
 
     if (response.ok) {
+        const data: ProcessingResult = await response.json();
         alert("File uploaded successfully!");
+        return data;
     } else {
         alert("Failed to upload file.");
     }
     } catch (error) {
         console.log("error", error);
-        alert("An error occurred while uploading the file.");
+        alert(error);
     }
+    return null;
 }

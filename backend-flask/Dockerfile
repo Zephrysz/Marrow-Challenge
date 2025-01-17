@@ -5,6 +5,13 @@ WORKDIR /backend-flask
 ENV FLASK_APP=/backend-flask/server.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
+# for converting audio files to wav
+RUN apt-get update && \
+    apt-get install -y \
+    ffmpeg \
+    libsndfile1 \
+    libopus0 \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
