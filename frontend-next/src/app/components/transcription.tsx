@@ -21,7 +21,7 @@ const Transcription: React.FC<TranscriptionProps> = ({ processingResult }) => {
 
     return (
     <div className="relative flex flex-col bg-neutral-800 h-3/5 rounded">
-        <div className="flex  sm:absolute top-4 right-4 rounded shadow">
+        <div className="flex  lg:absolute top-4 right-4 rounded shadow">
             {currentDownloadPath && (
                 <a
                     href={`http://localhost:5000/download/${encodeURIComponent(currentDownloadPath.split('/').pop() || "")}`}
@@ -64,7 +64,7 @@ const Transcription: React.FC<TranscriptionProps> = ({ processingResult }) => {
     <div className="flex flex-col flex-1 overflow-hidden rounded">
         <div className="flex p-4">
             {/* toggle versions */}
-            <div className="flex items-center justify-center space-x-4 mb-4">
+            <div className="flex items-center justify-center ">
                 <button
                     onClick={() => setSelectedVersion('original')}
                     className={`text-lg font-semibold ${

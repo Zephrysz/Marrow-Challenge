@@ -47,8 +47,8 @@ const Home = () => {
 
 
   return (
-    <div className="flex-row sm:flex sm:h-screen p-4 font-sans bg-neutral-800 sm:p-10">
-      <aside className="w-full sm:w-1/4 p-6 bg-neutral-900 rounded-l-lg shadow-lg flex flex-col">
+    <div className="flex-row min-h-screen lg:flex lg:h-screen p-4 font-sans bg-neutral-800 lg:p-10">
+      <aside className="w-full lg:w-1/4 p-6 bg-neutral-900 rounded-t-lg lg:rounded-t-none lg:rounded-l-lg shadow-lg flex flex-col">
         <FileUpload selectedFile={selectedFile} onFileChange={(e) => setSelectedFile(e.target.files?.[0] || null)} />
         <div className='pb-2'></div>
         <Dropdown
@@ -136,7 +136,7 @@ const Home = () => {
           )}
         </div>
       </aside>
-      <main className="flex-1 p-6 sm:p-10 bg-neutral-950">
+      <main className="flex-1 p-6 lg:p-10 bg-neutral-950 rounded-b-lg lg:rounded-b-none lg:rounded-r-lg">
         <Transcription processingResult={processingResult} />
         <SentimentAnalysis sentimentAnalysis={processingResult?.sentiment_analysis} />
       </main>
