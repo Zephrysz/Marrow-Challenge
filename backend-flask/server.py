@@ -24,11 +24,6 @@ sentiment_analysis_manager = SentimentAnalysisManager()
 sentiment_analysis_manager_gpt = SentimentAnalysisGPTManager()
 text_formatter_manager = TextFormatterManager()
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-
-
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:

@@ -73,8 +73,23 @@ const Home = () => {
         <Dropdown
           label="Select Language"
           options={[
-            { value: 'portuguese', label: 'Portuguese' },
+            { value: 'czech', label: 'Czech' },
+            { value: 'danish', label: 'Danish' },
+            { value: 'dutch', label: 'Dutch' },
             { value: 'english', label: 'English' },
+            { value: 'estonian', label: 'Estonian' },
+            { value: 'finnish', label: 'Finnish' },
+            { value: 'french', label: 'French' },
+            { value: 'german', label: 'German' },
+            { value: 'greek', label: 'Greek' },
+            { value: 'italian', label: 'Italian' },
+            { value: 'norwegian', label: 'Norwegian' },
+            { value: 'polish', label: 'Polish' },
+            { value: 'portuguese', label: 'Portuguese' },
+            { value: 'slovene', label: 'Slovene' },
+            { value: 'spanish', label: 'Spanish' },
+            { value: 'swedish', label: 'Swedish' },
+            { value: 'turkish', label: 'Turkish' },
           ]}
           selectedValue={selectedLanguage}
           onChange={(e) => setSelectedLanguage(e.target.value)}
