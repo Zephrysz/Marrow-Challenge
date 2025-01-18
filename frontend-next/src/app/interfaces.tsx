@@ -8,4 +8,5 @@ export interface ProcessingResult {
     text: string;
     overall_sentiment: string;
     sentiment_analysis?: SentimentAnalysisItem[];
+    transcription_path: string;
 }

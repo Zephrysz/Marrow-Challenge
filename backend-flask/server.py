@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file 
 from flask_cors import CORS
 import nltk
 import json
@@ -53,17 +53,29 @@ def upload_file():
             sentiment_analysis = sentiment_analysis_result["sentiment_analysis"]
 
             os.remove(file_path)
-            with open(f"{file_path.rsplit('.', 1)[0]}.txt", 'w') as f:
+            transcription_path = f"{file_path.rsplit('.', 1)[0]}.txt"
+            with open(transcription_path, 'w') as f:
                 f.write(text)
+                
             return jsonify({
                         'text': text,
                         'overall_sentiment': overall_sentiment,
                         'sentiment_analysis': sentiment_analysis,
+                        'transcription_path': transcription_path,
                         }), 200
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
     return jsonify({'error': 'File upload failed'}), 400
+
+
+@app.route('/download/<path:filename>', methods=['GET'])
+def download_file(filename):
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if os.path.exists(file_path):
+        return send_file(file_path, as_attachment=True)
+    return jsonify({'error': 'File not found'}), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)

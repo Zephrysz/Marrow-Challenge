@@ -34,7 +34,7 @@ class SentimentAnalysisGPTManager():
                 ],
                 response_format={
                 "type": "json_schema",
-                "json_schema": 
+                "json_schema":
                     {
                     "name": "transcript_evaluation",
                     "schema": {
