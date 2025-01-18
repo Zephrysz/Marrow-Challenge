@@ -40,10 +40,12 @@ def upload_file():
     sentiment_model = request.form.get('sentiment_model', 'llm')
     format_enabled = request.form.get('format_enabled', 'false')
     
-    if file:
+    if not file:
+        return jsonify({'error': 'No file uploaded or file is empty'}), 400
+    
+    try:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
-        # try:
         text = speech_to_text_manager.recognize_speech_split_in_chunks(file_path, 5, model)
 
         if sentiment_model == 'transformers':
@@ -61,7 +63,6 @@ def upload_file():
             formatted_transcription_path = f"{file_path.rsplit('.', 1)[0]}_formatted.txt"
             with open(formatted_transcription_path, 'w') as f:
                 f.write(str(formatted_text))
-            
 
         os.remove(file_path)
 
@@ -77,8 +78,8 @@ def upload_file():
                     'formatted_transcription_path': formatted_transcription_path,
                     'formatted_text': formatted_text,
                     }), 200
-        # except Exception as e:
-        #     return jsonify({'error': str(e)}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
     return jsonify({'error': 'File upload failed'}), 400
 
