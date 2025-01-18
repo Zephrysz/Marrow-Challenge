@@ -6,13 +6,13 @@ interface TranscriptionProps {
 }
 
 const Transcription: React.FC<TranscriptionProps> = ({ processingResult }) => (
-    <div className=" relative flex flex-col bg-neutral-800 h-3/5 overflow-hidden rounded">
-        <div className="absolute top-4 right-4 bg-neutral-700 px-4 py-2 rounded shadow">
+    <div className="relative flex flex-col bg-neutral-800 h-3/5 rounded">
+        <div className="sm:absolute top-4 right-4 bg-neutral-700 px-4 py-2 rounded shadow">
             <h4 className="text-sm font-semibold text-gray-400">
                 Overall Sentiment:{" "}
                 <span
                 className={`font-bold ${
-                    processingResult?.overall_sentiment === "positive"
+                    processingResult?.overall_sentiment === "positive" 
                     ? "text-green-500"
                     : processingResult?.overall_sentiment === "negative"
                     ? "text-red-500"

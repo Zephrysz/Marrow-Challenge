@@ -39,7 +39,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex-row sm:flex h-screen p-4 font-sans bg-neutral-800 sm:p-10">
+    <div className="flex-row sm:flex sm:h-screen p-4 font-sans bg-neutral-800 sm:p-10">
       <aside className="w-full sm:w-1/4 p-6 bg-neutral-900 rounded-l-lg shadow-lg">
         <FileUpload selectedFile={selectedFile} onFileChange={(e) => setSelectedFile(e.target.files?.[0] || null)} />
         <div className='pb-2'></div>
