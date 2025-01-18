@@ -16,12 +16,14 @@ const Home = () => {
   const [selectedSentimentModel, setSelectedSentimentModel] = useState<string>('llm');
   const [processingResult, setProcessingResult] = useState<ProcessingResult | null>(null);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isFormattingEnabled, setIsFormattingEnabled] = useState<boolean>(false);
+
 
   const handleProcessFile = async () => {
     if (!selectedFile) return;
 
     setIsProcessing(true);
-    setProcessingResult(null);
+    // setProcessingResult(null);
 
     try {
       const result = await handleAudioFileUpload(
@@ -29,6 +31,7 @@ const Home = () => {
         selectedModel,
         selectedLanguage,
         selectedSentimentModel,
+        isFormattingEnabled,
       );
       setProcessingResult(result);
     } catch (error) {
@@ -80,6 +83,23 @@ const Home = () => {
           selectedValue={selectedSentimentModel}
           onChange={(e) => setSelectedSentimentModel(e.target.value)}
         />
+        <div className="flex items-center py-4">
+          <div
+            className={`relative w-12 h-6 rounded-full cursor-pointer ${
+              isFormattingEnabled ? 'bg-green-500' : 'bg-neutral-700'
+            }`}
+            onClick={() => setIsFormattingEnabled(!isFormattingEnabled)}
+          >
+            <div
+              className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
+                isFormattingEnabled ? 'transform translate-x-6' : ''
+              }`}
+            ></div>
+          </div>
+          <label htmlFor="formattingToggle" className="text-gray-400 font-medium ml-3 select-none">
+            Enable Formatting
+          </label>
+        </div>
         <div className="flex items-center py-2 justify-start">
           <ProcessButton
             isProcessing={isProcessing}

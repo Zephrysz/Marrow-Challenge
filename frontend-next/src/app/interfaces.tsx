@@ -9,4 +9,7 @@ export interface ProcessingResult {
     overall_sentiment: string;
     sentiment_analysis?: SentimentAnalysisItem[];
     transcription_path: string;
+
+    formatted_transcription_path?: string;
+    formatted_text?: string;
 }

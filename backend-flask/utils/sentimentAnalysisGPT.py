@@ -1,4 +1,5 @@
 from openai import OpenAI
+import json
 
 class SentimentAnalysisGPTManager():
     def __init__(self):
@@ -6,7 +7,7 @@ class SentimentAnalysisGPTManager():
         
     
     def analyze_transcript_gpt(self, transcript):
-        # try:
+        try:
             response = self.client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -30,7 +31,7 @@ class SentimentAnalysisGPTManager():
                     "OTHER" : if they are toxic or abusive and not categorized in any of the previous
                     '''
                 },
-                {"role": "user", "content": f"{transcript}"},
+                {   "role": "user", "content": f"{transcript}"},
                 ],
                 response_format={
                 "type": "json_schema",
@@ -97,6 +98,6 @@ class SentimentAnalysisGPTManager():
                     }
                 }
             )
-            return response.choices[0].message.content
-        # except Exception as e:
-        #     return {"error": str(e)}
+            return json.loads(response.choices[0].message.content)
+        except Exception as e:
+            return {"error": str(e)}
