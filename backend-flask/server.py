@@ -81,7 +81,7 @@ def upload_file():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-    return jsonify({'error': 'File upload failed'}), 400
+    return jsonify({'error': 'Something went wrong in the progress'}), 400
 
 
 @app.route('/download/<path:filename>', methods=['GET'])
@@ -91,6 +91,28 @@ def download_file(filename):
         return send_file(file_path, as_attachment=True)
     return jsonify({'error': 'File not found'}), 404
 
+
+@app.route('/set_api_key', methods=['POST'])
+def set_api_key():
+    try:
+        data = request.json
+        api_key = data.get('api_key')
+
+        if not api_key:
+            return jsonify({'error': 'API key is required'}), 400
+
+        os.environ['OPENAI_API_KEY'] = api_key
+
+        global sentiment_analysis_manager_gpt
+        global text_formatter_manager
+
+        sentiment_analysis_manager_gpt = SentimentAnalysisGPTManager()
+        text_formatter_manager = TextFormatterManager()
+
+        return jsonify({'message': 'API key updated successfully and managers restarted'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

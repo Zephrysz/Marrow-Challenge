@@ -7,6 +7,7 @@ import Transcription from './components/transcription';
 import SentimentAnalysis from './components/sentimentAnalysis';
 import ProcessButton from './components/processButton';
 import { handleAudioFileUpload } from './utils/fileUpload';
+import { handleApiKeySubmit } from './utils/apiKeySubmit';
 import { ProcessingResult } from './interfaces';
 
 const Home = () => {
@@ -17,6 +18,9 @@ const Home = () => {
   const [processingResult, setProcessingResult] = useState<ProcessingResult | null>(null);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [isFormattingEnabled, setIsFormattingEnabled] = useState<boolean>(false);
+  const [apiKey, setApiKey] = useState<string>(''); // API key state
+  const [isKeyUpdated, setIsKeyUpdated] = useState<boolean>(false); // Track key update status
+
 
 
   const handleProcessFile = async () => {
@@ -41,9 +45,10 @@ const Home = () => {
     }
   };
 
+
   return (
     <div className="flex-row sm:flex sm:h-screen p-4 font-sans bg-neutral-800 sm:p-10">
-      <aside className="w-full sm:w-1/4 p-6 bg-neutral-900 rounded-l-lg shadow-lg">
+      <aside className="w-full sm:w-1/4 p-6 bg-neutral-900 rounded-l-lg shadow-lg flex flex-col">
         <FileUpload selectedFile={selectedFile} onFileChange={(e) => setSelectedFile(e.target.files?.[0] || null)} />
         <div className='pb-2'></div>
         <Dropdown
@@ -59,6 +64,7 @@ const Home = () => {
             { value: 'medium', label: 'Medium-Multilingual'},
             { value: 'large', label: 'Large-Multilingual' },
             { value: 'turbo', label: 'Large-Multilingual'},
+            { value: 'whisper_api', label: 'Whisper API'},
           ]}
           selectedValue={selectedModel}
           onChange={(e) => setSelectedModel(e.target.value)}
@@ -106,6 +112,28 @@ const Home = () => {
             selectedFile={selectedFile}
             onClick={handleProcessFile}
           />
+        </div>
+        <div className="border-t border-neutral-300 mt-auto">
+          <label htmlFor="apiKeyInput" className="text-gray-400 font-medium">
+            Your OpenAI API Key
+          </label>
+          <input
+            type="text"
+            id="apiKeyInput" 
+            className="w-full mt-2 p-2 bg-neutral-800 text-white rounded border border-gray-600 focus:ring-2 focus:ring-green-500 focus:outline-none"
+            value={apiKey}
+            onChange={(e) => setApiKey(e.target.value)}
+            placeholder="Enter your API key"
+          />
+          <button
+            onClick={() => handleApiKeySubmit(apiKey, setIsKeyUpdated)}
+            className="mt-4 w-full bg-blue-700 text-white font-medium py-2 rounded hover:bg-blue-800 transition-colors"
+          >
+            Use this key
+          </button>
+          {isKeyUpdated && (
+            <p className="mt-2 text-green-400">API key updated successfully!</p>
+          )}
         </div>
       </aside>
       <main className="flex-1 p-6 sm:p-10 bg-neutral-950">

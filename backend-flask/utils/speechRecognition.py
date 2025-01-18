@@ -6,13 +6,16 @@ import os
 class SpeechToTextManager():
     def __init__(self):
         self.recognizer = sr.Recognizer()
-
+        
 
     def recognize_speech(self, audio_file_path : str, model : str = "small"):
         with sr.AudioFile(audio_file_path) as source:
             audio_data = self.recognizer.record(source)
             try:
-                text = self.recognizer.recognize_faster_whisper(audio_data, model)
+                if model == 'whisper_api':
+                    text = self.recognizer.recognize_openai(audio_data)
+                else:
+                    text = self.recognizer.recognize_faster_whisper(audio_data, model)
             except sr.UnknownValueError:
                 return "Could not understand audio"
             except sr.RequestError as e:
