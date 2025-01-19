@@ -95,7 +95,7 @@ const Home = () => {
             { value: 'medium.en', label: 'Medium-English' },
             { value: 'medium', label: 'Medium-Multilingual'},
             { value: 'large', label: 'Large-Multilingual' },
-            { value: 'turbo', label: 'Large-Multilingual'},
+            { value: 'turbo', label: 'Turbo-Multilingual'},
             { value: 'whisper_api', label: 'Whisper API'},
           ]}
           selectedValue={selectedModel}
