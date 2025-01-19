@@ -151,7 +151,7 @@ const Home = () => {
           )}
         </div>
       </aside>
-      <main className="flex-1 p-6 lg:p-10 bg-neutral-950 rounded-b-lg lg:rounded-b-none lg:rounded-r-lg">
+      <main className="flex-1 p-6 bg-neutral-950 rounded-b-lg lg:rounded-b-none lg:rounded-r-lg">
         <Transcription processingResult={processingResult} />
         <SentimentAnalysis sentimentAnalysis={processingResult?.sentiment_analysis} />
       </main>

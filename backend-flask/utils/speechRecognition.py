@@ -24,7 +24,6 @@ class SpeechToTextManager():
 
 
     def recognize_speech_split_in_chunks(self, audio_file_path : str, minutes : int = 5, model : str = "small") -> str:
-        # maybe this can be optimized (a lot of write/read from os)
         sound = AudioSegment.from_file(audio_file_path)
 
         chunk_length_ms = 1000 * 60 * minutes

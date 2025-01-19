@@ -6,7 +6,7 @@ interface SentimentAnalysisProps {
 }
 
 const SentimentAnalysis: React.FC<SentimentAnalysisProps> = ({ sentimentAnalysis }) => (
-    <div className="flex flex-col overflow-hidden h-2/5 mt-4 bg-neutral-800 rounded">
+    <div className="flex flex-col overflow-hidden box-border h-2/5 mt-4 bg-neutral-800 rounded">
         <h4 className="text-lg font-semibold p-4">Negative Sentiment Highlights</h4>
         <div className="flex-1 overflow-y-auto p-4">
         {sentimentAnalysis?.some(

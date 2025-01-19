@@ -20,8 +20,8 @@ const Transcription: React.FC<TranscriptionProps> = ({ processingResult }) => {
         : processingResult?.formatted_transcription_path;
 
     return (
-    <div className="relative flex flex-col bg-neutral-800 h-3/5 rounded">
-        <div className="flex  lg:absolute top-4 right-4 rounded shadow">
+    <div className="relative flex flex-col flex-3 bg-neutral-800 box-border h-3/5 rounded">
+        <div className="flex lg:absolute top-4 right-4 rounded shadow">
             {currentDownloadPath && (
                 <a
                     href={`http://localhost:5000/download/${encodeURIComponent(currentDownloadPath.split('/').pop() || "")}`}
