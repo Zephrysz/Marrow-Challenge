@@ -110,10 +110,12 @@ def set_api_key():
 
         global sentiment_analysis_manager_gpt
         global text_formatter_manager
+        global speech_to_text_manager
 
         sentiment_analysis_manager_gpt = SentimentAnalysisGPTManager()
         text_formatter_manager = TextFormatterManager()
-
+        speech_to_text_manager = SpeechToTextManager()
+        
         return jsonify({'message': 'API key updated successfully and managers restarted'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
