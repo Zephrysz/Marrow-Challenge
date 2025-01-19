@@ -172,8 +172,8 @@ const Home = () => {
             Your OpenAI API Key
           </label>
           <input
-            type="text"
-            id="apiKeyInput" 
+            type="password"
+            id="apiKeyInput"
             className="w-full mt-2 p-2 bg-neutral-800 text-white rounded border border-gray-600 focus:ring-2 focus:ring-green-500 focus:outline-none"
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
