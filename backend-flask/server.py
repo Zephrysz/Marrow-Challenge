@@ -43,7 +43,7 @@ def upload_file():
     try:
         file_path = save_uploaded_file(file)
 
-        text = speech_to_text_manager.recognize_speech_split_in_chunks(file_path, 4, model)
+        text = speech_to_text_manager.recognize_speech_split_in_chunks(file_path, 2, model, language)
 
         sentiment_analysis_result = analyze_sentiment(text, sentiment_model, language)
         overall_sentiment = sentiment_analysis_result["overall_sentiment"]
