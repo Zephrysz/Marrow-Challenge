@@ -115,7 +115,7 @@ $ docker compose up
 
 Após rodar o comando, a aplicação estará disponível em: [localhost:3000](http://localhost:3000/)
 
-## 📔 Considerações finais
+## :notebook: Considerações finais
 
 - O processo de build do projeto pode levar alguns minutos para ser concluído.
 - Todas as etapas, incluindo transcrição, formatação, análise de sentimento e sumarização, demandam um tempo considerável para serem executadas, mesmo quando usando a API.
