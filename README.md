@@ -65,6 +65,13 @@ A formatação reorganiza o conteúdo em parágrafos claros e estruturados, alé
 
 Ambas versões das transcrições — formatadas e não formatadas — são armazenadas no sistema e podem ser baixadas pelo usuário.
 
+### 4. Sumarização do texto
+Como se trata de um sistema de monitoramento para um ambiente educacional, surgiu a ideia de implementar uma funcionalidade de sumarização do texto transcrito para verificar se o professor está se mantendo dentro do tópico da aula. Para isso, novamente utilizou-se modelos baseados na arquitetura Transformer, especialmente voltados para a tarefa de sumarização.
+
+Atualmente, o sistema oferece suporte para sumarização em dois idiomas: inglês e português. No entanto, o desempenho dos modelos é significativamente melhor em inglês, devido ao tamanho do modelo utilizado [facebook/bart-large-cnn](https://huggingface.co/facebook/bart-large-cnn), o que confere ao modelo uma maior acurácia e relevância nas informações extraídas.
+
+Porém, o português foi integrado principalmente como *proof of concept*, utilizando o modelo [phpaiola/ptt5-base-summ-xlsum](https://huggingface.co/recogna-nlp/ptt5-base-summ-xlsum), demonstrando que a tarefa de sumarização é viável também para o idioma. Embora o desempenho do modelo em português ainda seja inferior, a criação de modelos maiores e mais robustos poderia melhorar consideravelmente os resultados dessa funcionalidade. Essa implementação no português serve como um indicativo de que, com o treinamento adequado, o modelo poderia garantir maior precisão na sumarização de conteúdos.
+
 ---
 
 ## :memo: Requisitos
