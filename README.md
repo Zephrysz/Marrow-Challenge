@@ -9,6 +9,7 @@
   <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-como-usar">Como usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#scroll-scripts-disponíveis">Scripts disponíveis</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#notebook-consideracoes-finais">Considerações Finais</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
 ## :rocket: O desafio
@@ -114,3 +115,10 @@ $ docker compose up
 
 Após rodar o comando, a aplicação estará disponível em: [localhost:3000](http://localhost:3000/)
 
+## :notebook: Considerações finais
+
+- O processo de build do projeto pode levar alguns minutos para ser concluído.
+- Todas as etapas, incluindo transcrição, formatação, análise de sentimento e sumarização, demandam um tempo considerável para serem executadas, mesmo quando usando a API.
+- A opção de sumarização permanece oculta até que uma transcrição válida seja gerada.
+- Não foram realizados testes com arquivos de áudio em todas as extensões possíveis, o que pode gerar comportamentos não previstos.
+- Áudios transcritos com o parâmetro de linguagem diferente da língua real do áudio podem apresentar problemas de transcrição ou até serem traduzidos para a linguagem configurada.
