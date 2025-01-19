@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="#rocket-o-desafio">O desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#hammer_and_wrench-decisoes-de-implementacao-e-tecnologias-utilizadas">Ferramentas e Decisões</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;  
+  <a href="#hammer_and_wrench-decisoes-de-implementacao-e-metodologias-utilizadas">Ferramentas e Decisões</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;  
   <a href="#memo-requisitos">Requisitos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-como-usar">Como usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -19,7 +19,7 @@ O projeto "Desafio Marrow - IA" tem como objetivo desenvolver um sistema que det
 
 As tecnologias utilizadas para a implementação foram Python, Next.js, TailwindCSS e Docker. 
 
-## :hammer_and_wrench: Decisões de Implementação e Tecnologias Utilizadas
+## :hammer_and_wrench: Decisões de Implementação e Metodologias Utilizadas
 
 ### 1. Transcrição de áudio
 A transcrição foi implementada utilizando a biblioteca [SpeechRecognition](https://github.com/Uberi/speech_recognition#readme) em Python, que oferece suporte a diversos modelos de conversão de fala para texto. Para este projeto, escolheu-se o modelo Whisper da [OpenAI](https://openai.com/whisper) devido à sua acurácia e pelas opções de executar localmente ou pela API. 
@@ -74,6 +74,7 @@ Ambas versões das transcrições — formatadas e não formatadas — são arma
 | [Docker](https://www.docker.com/)              | 27.3.1 | Plataforma de contêineres que permite empacotar, distribuir e executar o aplicativo de forma isolada, garantindo consistência no ambiente de desenvolvimento e produção.  |
 | [Git](https://git-scm.com/)           | | |
 
+## :man_technologist: Tecnologias
 
 Este projeto está sendo desenvolvido com as seguintes tecnologias:
 
