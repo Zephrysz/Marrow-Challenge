@@ -10,6 +10,7 @@ export const handleApiKeySubmit = async (apiKey: string, setIsKeyUpdated: React.
   
       if (response.ok) {
         setIsKeyUpdated(true);
+        
         setTimeout(() => setIsKeyUpdated(false), 3000); // Reset status after 3 seconds
       } else {
         console.error('Failed to update API key:', await response.json());

@@ -9,6 +9,7 @@ from utils.speechRecognition import SpeechToTextManager
 from utils.sentimentAnalysis import SentimentAnalysisManager
 from utils.sentimentAnalysisGPT import SentimentAnalysisGPTManager
 from utils.formatText import TextFormatterManager
+from utils.textSummarizer import TextSummarizerManager
 
 app = Flask(__name__)
 CORS(app)
@@ -23,6 +24,7 @@ speech_to_text_manager = SpeechToTextManager()
 sentiment_analysis_manager = SentimentAnalysisManager()
 sentiment_analysis_manager_gpt = SentimentAnalysisGPTManager()
 text_formatter_manager = TextFormatterManager()
+text_summarizer_manager = TextSummarizerManager()
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -38,35 +40,35 @@ def upload_file():
     if not file:
         return jsonify({'error': 'No file uploaded or file is empty'}), 400
     
-    # try:
-    file_path = save_uploaded_file(file)
+    try:
+        file_path = save_uploaded_file(file)
 
-    text = speech_to_text_manager.recognize_speech_split_in_chunks(file_path, 4, model)
+        text = speech_to_text_manager.recognize_speech_split_in_chunks(file_path, 4, model)
 
-    sentiment_analysis_result = analyze_sentiment(text, sentiment_model, language)
-    overall_sentiment = sentiment_analysis_result["overall_sentiment"]
-    sentiment_analysis = sentiment_analysis_result["sentiment_analysis"]
+        sentiment_analysis_result = analyze_sentiment(text, sentiment_model, language)
+        overall_sentiment = sentiment_analysis_result["overall_sentiment"]
+        sentiment_analysis = sentiment_analysis_result["sentiment_analysis"]
 
-    formatted_text, formatted_transcription_path = format_text_if_enabled(text, file_path, format_enabled)
+        formatted_text, formatted_transcription_path = format_text_if_enabled(text, file_path, format_enabled)
 
-    os.remove(file_path)
+        os.remove(file_path)
 
-    transcription_path = save_transcription_to_file(text, file_path)
+        transcription_path = save_transcription_to_file(text, file_path)
 
-    return jsonify({
-                'text': text,
-                'overall_sentiment': overall_sentiment,
-                'sentiment_analysis': sentiment_analysis,
-                'transcription_path': transcription_path,
-                'formatted_transcription_path': formatted_transcription_path,
-                'formatted_text': formatted_text,
-                }), 200
-    # except FileNotFoundError as e:
-    #     return jsonify({'error': f"File error: {str(e)}"}), 400
-    # except ValueError as e:
-    #     return jsonify({'error': f"Value error: {str(e)}"}), 400
-    # except Exception as e:
-    #     return jsonify({'error': f"Unexpected error: {str(e)}"}), 500
+        return jsonify({
+                    'text': text,
+                    'overall_sentiment': overall_sentiment,
+                    'sentiment_analysis': sentiment_analysis,
+                    'transcription_path': transcription_path,
+                    'formatted_transcription_path': formatted_transcription_path,
+                    'formatted_text': formatted_text,
+                    }), 200
+    except FileNotFoundError as e:
+        return jsonify({'error': f"File error: {str(e)}"}), 400
+    except ValueError as e:
+        return jsonify({'error': f"Value error: {str(e)}"}), 400
+    except Exception as e:
+        return jsonify({'error': f"Unexpected error: {str(e)}"}), 500
 
 
 @app.route('/download/<path:filename>', methods=['GET'])
@@ -77,6 +79,24 @@ def download_file(filename):
     return jsonify({'error': 'File not found'}), 404
 
 
+@app.route('/summarize', methods=['POST'])
+def summarize():
+    data = request.json
+    transcript = data.get('transcript')
+    language = data.get('language')
+    if not transcript:
+        return jsonify({'error': 'Transcript is required.'}), 400
+
+    try:
+        summary = text_summarizer_manager.summarize(transcript, language)
+        return jsonify({'summary': summary}), 200
+    except ValueError as e:
+        return jsonify({'error': f"Value error: {str(e)}"}), 400
+    except Exception as e:
+        return jsonify({'error': f"Unexpected error: {str(e)}"}), 500
+
+
+# this is probably unsafe!!!!
 @app.route('/set_api_key', methods=['POST'])
 def set_api_key():
     try:
@@ -96,7 +116,7 @@ def set_api_key():
 
         return jsonify({'message': 'API key updated successfully and managers restarted'}), 200
     except Exception as e:
-        return jsonify({'error': str(e)}), 400
+        return jsonify({'error': str(e)}), 500
 
 
 def save_uploaded_file(file):
@@ -115,7 +135,7 @@ def analyze_sentiment(text, sentiment_model, language):
 
 
 def format_text_if_enabled(text, file_path, format_enabled):
-    if not format_enabled:
+    if format_enabled == 'false': #ts returns false as string, and its not False as well
         return '', '' 
     formatted_text = text_formatter_manager.format_text(text)
     formatted_transcription_path = f"{file_path.rsplit('.', 1)[0]}_formatted.txt"

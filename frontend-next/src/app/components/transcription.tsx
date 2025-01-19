@@ -69,7 +69,7 @@ const Transcription: React.FC<TranscriptionProps> = ({ processingResult }) => {
                     onClick={() => setSelectedVersion('original')}
                     className={`text-lg font-semibold ${
                         selectedVersion === 'original' ? 'text-white' : 'text-gray-500'
-                    } transition-colors duration-300`}
+                    } transition-colors duration-300 pr-2`}
                     >
                 Transcription
                 </button>
@@ -78,7 +78,7 @@ const Transcription: React.FC<TranscriptionProps> = ({ processingResult }) => {
                     onClick={() => setSelectedVersion('formatted')}
                     className={`text-lg font-semibold ${
                         selectedVersion === 'formatted' ? 'text-white' : 'text-gray-500'
-                    } transition-colors duration-300`}
+                    } transition-colors duration-300 pl-2`}
                     >
                 Formatted
                 </button>) : (null)}

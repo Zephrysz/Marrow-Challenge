@@ -1,5 +1,4 @@
 import React from 'react';
-
 interface FileUploadProps {
   selectedFile: File | null;
   onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

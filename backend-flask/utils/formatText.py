@@ -5,6 +5,7 @@ class TextFormatterManager():
     def __init__(self):
         self.client = OpenAI()
     
+    # maybe should've used structured outputs to enforce the teacher and student
     def format_text(self, text):
         try:
             response = self.client.chat.completions.create(
