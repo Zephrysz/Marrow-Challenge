@@ -84,7 +84,7 @@ const Home = () => {
         <FileUpload selectedFile={selectedFile} onFileChange={(e) => setSelectedFile(e.target.files?.[0] || null)} />
         <div className='pb-2'></div>
         <Dropdown
-          label="Select Model"
+          label="Select Transcript Model"
           options={[
             { value: 'tiny.en', label: 'Tiny-English' },
             { value: 'tiny', label: 'Tiny-Multilingual' },
