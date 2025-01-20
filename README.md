@@ -75,6 +75,10 @@ Porém, o português foi integrado principalmente como *proof of concept*, utili
 
 Obs: Caso não queira utilizar a API do OpenAI, precisará utilizar um modelo de STT local e modelo de análise de sentimento Transformers e sem a opção de formatação!
 
+![Demonstração do produto final](img_docs/eletronica_positivo.png)
+![Demonstração do produto final](img_docs/thevoices_negativo.png)
+![Demonstração do produto final](img_docs/thevoices_summarized.png)
+
 ---
 
 ## :memo: Requisitos
