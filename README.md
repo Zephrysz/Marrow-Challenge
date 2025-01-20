@@ -73,6 +73,8 @@ Atualmente, o sistema oferece suporte para sumarização em dois idiomas: inglê
 
 Porém, o português foi integrado principalmente como *proof of concept*, utilizando o modelo [phpaiola/ptt5-base-summ-xlsum](https://huggingface.co/recogna-nlp/ptt5-base-summ-xlsum), demonstrando que a tarefa de sumarização é viável também para o idioma. Embora o desempenho do modelo em português ainda seja inferior, a criação de modelos maiores e mais robustos poderia melhorar consideravelmente os resultados dessa funcionalidade. Essa implementação no português serve como um indicativo de que, com o treinamento adequado, o modelo poderia garantir maior precisão na sumarização de conteúdos.
 
+Obs: Caso não queira utilizar a API do OpenAI, precisará utilizar um modelo de STT local e modelo de análise de sentimento Transformers e sem a opção de formatação!
+
 ---
 
 ## :memo: Requisitos
@@ -94,7 +96,7 @@ Este projeto está sendo desenvolvido com as seguintes tecnologias:
 
 ## :information_source: Como usar
 
-Um tutorial em vídeo está disponível neste [link](https://youtu.be/).
+Um tutorial em vídeo está disponível neste [link](https://youtu.be/6GP1BgVuMXA).
 
 ```bash
 # Clonar este repositório
