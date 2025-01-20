@@ -80,7 +80,7 @@ const Home = () => {
 
   return (
     <div className="flex-row min-h-screen lg:flex lg:h-screen p-4 font-sans bg-neutral-800 lg:p-10">
-      <aside className="w-full lg:w-1/4 p-6 bg-neutral-900 rounded-t-lg lg:rounded-t-none lg:rounded-l-lg shadow-lg flex flex-col">
+      <aside className="w-full lg:w-1/4 p-6 bg-neutral-900 rounded-t-lg  lg:rounded-l-lg lg:rounded-t-none shadow-lg flex flex-col">
         <FileUpload selectedFile={selectedFile} onFileChange={(e) => setSelectedFile(e.target.files?.[0] || null)} />
         <div className='pb-2'></div>
         <Dropdown
