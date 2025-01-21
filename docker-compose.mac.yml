@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: ./backend-flask
+      dockerfile: Dockerfile.mac
+    ports:
+      - "5000:5000"
+    develop:
+      watch:
+        - action: sync
+          path: ./backend-flask
+          target: /backend-flask
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PYTORCH_ENABLE_MPS_FALLBACK=1
+  frontend:
+    build:
+      context: ./frontend-next
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend-next
+          target: /src/app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
