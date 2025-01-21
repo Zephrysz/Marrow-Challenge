@@ -110,7 +110,7 @@ $ cd Marrow-Challenge
 # Rodar a aplicação em ambiente de desenvolvimento
 $ docker compose up
 # Caso o dispositivo seja MAC, utilize este comando ao invés do anterior
-$ docker compose up -f docker-compose.mac.yml up 
+$ docker compose -f docker-compose.mac.yml up 
 ```
 
 ## :scroll: Scripts disponíveis
