@@ -11,6 +11,9 @@ services:
           target: /backend-flask
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+    devices:
+      - /dev/input
+      - "/dev/snd:/dev/snd"
 
   frontend:
     build:

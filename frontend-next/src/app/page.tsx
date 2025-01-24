@@ -8,10 +8,12 @@ import Transcription from './components/transcription';
 import Analysis from './components/Analysis';
 import ProcessButton from './components/processButton';
 import FetchSummaryButton from './components/fetchSummaryButton';
+import ToggleSwitch from './components/toggleSTT';
 import { handleAudioFileUpload } from './utils/fileUpload';
 import { handleApiKeySubmit } from './utils/apiKeySubmit';
 import { handleFetchSummary } from './utils/fetchSummary';
 import { ProcessingResult } from './interfaces';
+import { handleToggleSTTStream } from './utils/ToggleSTT';
 
 
 const Home = () => {
@@ -27,6 +29,8 @@ const Home = () => {
   const [summary, setSummary] = useState<string | null>(null);
   const [isSummarizing, setIsSummarizing] = useState<boolean>(false);
   const [transcriptExists, setTranscriptExists] = useState<boolean>(false);
+  const [isSTTEnabled, setIsSTTEnabled] = useState<boolean>(false);
+  const [eventSource, setEventSource] = useState<EventSource | null>(null);
 
   useEffect(() => {
     // Set transcriptExists to true if processingResult.text exists
@@ -77,10 +81,40 @@ const Home = () => {
     }
   };
 
+  const startStreamingSTT = () => {
+    const stream = handleToggleSTTStream(
+        selectedModel,
+        selectedLanguage,
+        selectedSentimentModel,
+        (data) => setProcessingResult(data), // Update state on receiving data
+        (error) => console.error("Streaming error:", error)
+      );
+      setEventSource(stream);
+    };
+
+    const stopStreamingSTT = () => {
+      if (eventSource) {
+        eventSource.close();
+        setEventSource(null);
+      }
+      setProcessingResult(null);
+    };
 
   return (
+
     <div className="flex-row min-h-screen lg:flex lg:h-screen p-4 font-sans bg-neutral-800 lg:p-10">
       <aside className="w-full lg:w-1/4 p-6 bg-neutral-900 rounded-t-lg  lg:rounded-l-lg lg:rounded-t-none shadow-lg flex flex-col">
+        <ToggleSwitch
+          isEnabled={isSTTEnabled}
+          onStartStreaming={() => {
+            setIsSTTEnabled(true);
+            startStreamingSTT();
+          }}
+          onStopStreaming={() => {
+            setIsSTTEnabled(false);
+            stopStreamingSTT();
+          }}
+        />
         <FileUpload selectedFile={selectedFile} onFileChange={(e) => setSelectedFile(e.target.files?.[0] || null)} />
         <div className='pb-2'></div>
         <Dropdown

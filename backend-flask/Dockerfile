@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 WORKDIR /backend-flask
 
@@ -11,6 +11,10 @@ RUN apt-get update && \
     ffmpeg \
     libsndfile1 \
     libopus0 \
+    portaudio19-dev  \
+    gcc \
+    alsa-base \
+    alsa-utils \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt

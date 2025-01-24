@@ -1,6 +1,8 @@
 import os
+import threading
+import time
 
-from flask import Flask, request, jsonify, send_file 
+from flask import Flask, request, jsonify, send_file, Response, stream_with_context
 from flask_cors import CORS
 import nltk
 import json
@@ -10,6 +12,7 @@ from utils.sentimentAnalysis import SentimentAnalysisManager
 from utils.sentimentAnalysisGPT import SentimentAnalysisGPTManager
 from utils.formatText import TextFormatterManager
 from utils.textSummarizer import TextSummarizerManager
+from utils.speechReceiver import SpeechReceiverManager
 
 app = Flask(__name__)
 CORS(app)
@@ -25,6 +28,7 @@ sentiment_analysis_manager = SentimentAnalysisManager()
 sentiment_analysis_manager_gpt = SentimentAnalysisGPTManager()
 text_formatter_manager = TextFormatterManager()
 text_summarizer_manager = TextSummarizerManager()
+speech_receiver_manager = SpeechReceiverManager()
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -119,6 +123,43 @@ def set_api_key():
         return jsonify({'message': 'API key updated successfully and managers restarted'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+    
+@app.route('/realtime_stt', methods=['GET'])
+def speech_receiver():
+    model = request.args.get('model')
+    language = request.args.get('language')
+    sentiment_model = request.args.get('sentiment_model')
+    is_active = request.args.get('active_listening')
+
+
+    def generate_transcriptions():
+        while is_active == "true":
+            try:
+                file_path = speech_receiver_manager.speech_receiver()
+                text = speech_to_text_manager.recognize_speech_split_in_chunks(file_path, 2, model, language)
+                sentiment_analysis_result = analyze_sentiment(text, sentiment_model, language)
+                overall_sentiment = sentiment_analysis_result["overall_sentiment"]
+                sentiment_analysis = sentiment_analysis_result["sentiment_analysis"]
+                os.remove(file_path)
+                transcription_path = save_transcription_to_file(text, file_path)
+
+                yield f"data: {json.dumps({'text': text, 'overall_sentiment': overall_sentiment, 'sentiment_analysis': sentiment_analysis, 'transcription_path': transcription_path})}\n\n"
+                time.sleep(1)
+            except Exception as e:
+                print(f"Error in generator: {e}")
+                continue
+
+    return Response(stream_with_context(generate_transcriptions()), content_type='text/event-stream')
+
+
+
+
+
+
+
+
+
 
 
 def save_uploaded_file(file):
